@@ -7,14 +7,16 @@ import { useAccount, useSigner, useContract } from "wagmi";
 import { ContractFactory } from "ethers";
 import ContractInfo from "../utils/deployments/ropsten/CustomToken.json";
 import { toast } from "react-toastify";
-import { CirclesWithBar ,Circles} from "react-loader-spinner";
+import { CirclesWithBar, Circles } from "react-loader-spinner";
+
 
 const Basic = () => {
+  const { address, isConnecting, isDisconnected , isConnected} = useAccount()
   const { data: signer, isError, isLoading } = useSigner();
   const [deploying, setdeploying] = useState(false);
-  const [contract, setcontract] = useState({})
-  const [contractUrl, setcontractUrl] = useState('')
-  const [validating,setValidating]= useState(false);
+  const [contract, setcontract] = useState({});
+  const [contractUrl, setcontractUrl] = useState("");
+  const [validating, setValidating] = useState(false);
 
   const [code, setcode] = useState("");
   const validationSchema = Yup.object({
@@ -31,6 +33,22 @@ const Basic = () => {
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
+            
+            console.log(isConnected)
+
+            if(!isConnected){
+              toast.error("Connect Metamask", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+              throw new Error("Connect metamask")
+            }
+            
             const factory = new ContractFactory(
               ContractInfo.abi,
               ContractInfo.bytecode,
@@ -42,33 +60,28 @@ const Basic = () => {
 
             // }
 
-           const contract = await factory.deploy(
+            const contract = await factory.deploy(
               values.name,
               values.symbol,
               values.premint
             );
             console.log(contract);
             setdeploying(false);
-            setcontract(contract)
-            setValidating(true)
-            setTimeout(()=>{
-              setcontractUrl(`https://ropsten.etherscan.io/address/${contract.address}`)
-                  setValidating(false);
-            },30000)
+            setcontract(contract);
+            setValidating(true);
+            setTimeout(() => {
+              setcontractUrl(
+                `https://ropsten.etherscan.io/address/${contract.address}`
+              );
+              setValidating(false);
+            }, 30000);
 
             console.log(values);
           } catch (error) {
             setdeploying(false);
+            console.log(error)
 
-            toast(error.reason, {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            
           }
 
           //
@@ -107,7 +120,7 @@ const Basic = () => {
       <pre className=" text-white m-2 p-2">
         {deploying && (
           <>
-          {/* <div></div> */}
+            {/* <div></div> */}
             <CirclesWithBar
               height="100"
               width="100"
@@ -124,34 +137,34 @@ const Basic = () => {
         )}
       </pre>
       <div>
-      {
-        contract.address && <>
-        <div>Your deployed address is at {contract.address} </div>
-        <div>{
-          validating && <div className="flex flex-col justify-center items-center">
-          <div>Wait It is being validated</div>
-          <Circles
-           height="80"
-  width="80"
-  color="#4fa94d"
-  ariaLabel="circles-loading"
-  wrapperStyle={{}}
-  wrapperClass=""
-  visible={true}
-/>
-          
-          </div>
-          }</div>
-        
-        {
-          contractUrl && <>
-          Your conract is validadted check at 
-          <a href={contractUrl}>{contractUrl}</a>
+        {contract.address && (
+          <>
+            <div>Your deployed address is at {contract.address} </div>
+            <div>
+              {validating && (
+                <div className="flex flex-col justify-center items-center">
+                  <div>Wait It is being validated</div>
+                  <Circles
+                    height="80"
+                    width="80"
+                    color="#4fa94d"
+                    ariaLabel="circles-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                  />
+                </div>
+              )}
+            </div>
+
+            {contractUrl && (
+              <>
+                Your conract is validadted check at
+                <a href={contractUrl}>{contractUrl}</a>
+              </>
+            )}
           </>
-        }
-        
-        </>
-      }
+        )}
       </div>
     </div>
   );

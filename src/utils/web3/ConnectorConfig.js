@@ -7,8 +7,7 @@ import {
   darkTheme,
   Chain,
 } from "@rainbow-me/rainbowkit";
-import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+
 
 // import { Chain, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import {
@@ -59,17 +58,7 @@ export function Web3ConnectorConfig({ children }) {
           {/* </ContractContext.Provider> */}
         </RainbowKitProvider>
       </WagmiConfig>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+     
       
     </>
   );

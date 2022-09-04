@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals'
 import ReduxProvider from './redux/store'
 import Router from './router'
 import { Web3ConnectorConfig } from './utils/web3/ConnectorConfig'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -17,6 +19,17 @@ root.render(
       {/* <App /> */}
     </ReduxProvider>
     </Web3ConnectorConfig>
+    <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
     
    
   </React.StrictMode>,
