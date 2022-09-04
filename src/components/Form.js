@@ -160,7 +160,8 @@ const Basic = () => {
             {contractUrl && (
               <>
                 Your conract is validadted check at
-                <a href={contractUrl}>{contractUrl}</a>
+                <a href={contractUrl} target='_blank'>{contractUrl}</a>
+                <div>If not Validated Just wait few more secs</div>
               </>
             )}
           </>
