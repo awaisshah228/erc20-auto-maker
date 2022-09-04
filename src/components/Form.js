@@ -27,7 +27,7 @@ const Basic = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1>Any place in your app!</h1>
+      <h1>Generate Free Basic ERC20 Token!</h1>
       <Formik
         initialValues={{ name: "", symbol: "", premint: "" }}
         validationSchema={validationSchema}
