@@ -37,15 +37,15 @@ const Basic = () => {
             console.log(isConnected)
 
             if(!isConnected){
-              toast.error("Connect Metamask", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                });
+              // toast.error("Connect Metamask", {
+              //   position: "top-right",
+              //   autoClose: 5000,
+              //   hideProgressBar: false,
+              //   closeOnClick: true,
+              //   pauseOnHover: true,
+              //   draggable: true,
+              //   progress: undefined,
+              //   });
               throw new Error("Connect metamask")
             }
             
@@ -79,7 +79,16 @@ const Basic = () => {
             console.log(values);
           } catch (error) {
             setdeploying(false);
-            console.log(error)
+            console.log(typeof error.message)
+            toast.error(error.message, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              });
 
             
           }
