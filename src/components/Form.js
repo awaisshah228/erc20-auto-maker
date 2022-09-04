@@ -136,10 +136,10 @@ const Basic = () => {
           </>
         )}
       </pre>
-      <div>
+      <div className="flex flex-col items-center justify-center m-3 p-1">
         {contract.address && (
           <>
-            <div>Your deployed address is at {contract.address} </div>
+            <div>Your deployed address is <br /> at {contract.address} </div>
             <div>
               {validating && (
                 <div className="flex flex-col justify-center items-center">
@@ -158,11 +158,12 @@ const Basic = () => {
             </div>
 
             {contractUrl && (
-              <>
-                Your conract is validadted check at
-                <a href={contractUrl} target='_blank'>{contractUrl}</a>
+              <div>
+                Your conract is validadted check at <br />
+                <a href={contractUrl} target='_blank'  className="underline">Click here</a>
+                <br />
                 <div>If not Validated Just wait few more secs</div>
-              </>
+              </div>
             )}
           </>
         )}
